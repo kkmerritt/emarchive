@@ -13,19 +13,22 @@
     <div id = "mainContainer">
       <div id = "secContainer">
         <h1 class = "myHeader" id = "recordingTitle"> Earliest Memory Recording </h1>
-        <br><br><br>
-        <!-- <p class = "mySubheader" id = "note"><i>Please allow microphone access to get started </i></span></p> -->
+         <p class = "mySubheader" id = "note"><i>Press microphone icon to begin recording </i></span></p> 
 
-        <!-- buttons to start/stop recording -->
         <div id = "recordingAssets">
           <button id = record <span style="font-size: 5em; background-color:none;"><i class="fas fa-microphone"></i></span></button>
           <button id = stopRecord disabled <span style="font-size: 5em;"><i class="far fa-stop-circle fa-spin"></i></span></button>
         </div>
 
         <!-- kev edit -->
- <div id = "bailout">
-   <li class = "submitLi"><p class = "mySubheader"><a href="home.html">Cancel recording and return to homepage</a></p></li>
- </div>
+      <div id = "bailout">
+         <li class = "submitLi"><p class = "mySubheader"><a href="home.html">Cancel recording and return to homepage</a></p></li>
+      </div>
+ <div id = "stoprecordinstruct">
+         <li class = "submitLi"><p class = "mySubheader">Recording your audio...</p></li>
+      </div>
+
+
          <!-- kev edit -->
 
         <p>
@@ -47,6 +50,7 @@
     <script>
       //Using MediaDevices API to access microphone (asks for access, then calls 'handlerFunction')
       navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {handlerFunction(stream)})
+        document.getElementById("stoprecordinstruct").style.display = "none";
 
       //handlerFunction
       function handlerFunction(stream) {
@@ -97,6 +101,7 @@
         document.getElementById("recordingAssets").style.display = "none";
         document.getElementById("hiddenMenu").style.display = "flex";
         document.getElementById("note").style.display = "none";
+        
       }
 
       //starting the recording
@@ -106,6 +111,8 @@
         document.getElementById("record").style.display = "none";
 //kev edit
         document.getElementById("bailout").style.display = "none";
+        document.getElementById("stoprecordinstruct").style.display = "block";
+
 //end kev edit
         document.getElementById("stopRecord").style.display = "block";
         stopRecord.disabled=false;

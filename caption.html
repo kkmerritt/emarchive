@@ -24,8 +24,12 @@
         <!-- buttons to start/stop recording -->
         <div id = "recordingAssets">
           <button id = record <span style="font-size: 5em;"><i class="fas fa-microphone"></i></span></button>
-          <button id = stopRecord disabled <span style="font-size: 5em;"><i class="far fa-stop-circle"></i></span></button>
+          <button id = stopRecord disabled <span style="font-size: 5em;"><i class="far fa-stop-circle fa-spin"></i></span></button>
         </div>
+
+<div id = "stoprecordinstruct">
+         <li class = "submitLi"><p class = "mySubheader">Recording your audio...</p></li>
+      </div>
 
         <!-- audio player -->
         <p>
@@ -46,6 +50,9 @@
 
 
     <script>
+
+        document.getElementById("stoprecordinstruct").style.display = "none";
+
       //Using MediaDevices API to access microphone (asks for access, then calls 'handlerFunction')
       navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {handlerFunction(stream)})
 
@@ -95,6 +102,8 @@
         stopRecord.disabled=false;
         document.getElementById("record").style.display = "none";
         document.getElementById("stopRecord").style.display = "block";
+        document.getElementById("stoprecordinstruct").style.display = "block";
+
         audioChunks = [];
         rec.start();
       }
@@ -106,6 +115,8 @@
         rec.stop();
         document.getElementById("recordingAssets").style.display = "none";
         document.getElementById("hiddenMenu").style.display = "flex";
+        document.getElementById("stoprecordinstruct").style.display = "none";
+
       }
 
 
