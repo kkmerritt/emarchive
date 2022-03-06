@@ -12,13 +12,20 @@
     <div id = "mainContainer">
       <div id = "secContainer">
         <h1 class = "myHeader" id = "recordingTitle"> Earliest Memory Recording </h1>
-        <p class = "mySubheader" id = "note"><i>Please allow microphone access to get started </i></span></p>
+        <br><br><br>
+        <!-- <p class = "mySubheader" id = "note"><i>Please allow microphone access to get started </i></span></p> -->
 
         <!-- buttons to start/stop recording -->
         <div id = "recordingAssets">
-          <button id = record <span style="font-size: 3em; background-color:none;"><i class="fas fa-microphone"></i></span></button>
-          <button id = stopRecord disabled <span style="font-size: 3em;"><i class="far fa-stop-circle"></i></span></button>
+          <button id = record <span style="font-size: 5em; background-color:none;"><i class="fas fa-microphone"></i></span></button>
+          <button id = stopRecord disabled <span style="font-size: 5em;"><i class="far fa-stop-circle"></i></span></button>
         </div>
+
+        <!-- kev edit -->
+ <div id = "bailout">
+   <li class = "submitLi"><p class = "mySubheader"><a href="home.html">Cancel recording and return to homepage</a></p></li>
+ </div>
+         <!-- kev edit -->
 
         <p>
     			<audio id=recordedAudio></audio>
@@ -96,6 +103,9 @@
         console.log('I was clicked!');
         record.disabled = true;
         document.getElementById("record").style.display = "none";
+//kev edit
+        document.getElementById("bailout").style.display = "none";
+//end kev edit
         document.getElementById("stopRecord").style.display = "block";
         stopRecord.disabled=false;
         audioChunks = [];
