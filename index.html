@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel = "stylesheet" type = "text/css" href = "style.css" />
+    <title>Earlierst Memory</title>
+  </head>
+
+  <body>
+    <h1> Earliest Memory Project </h1>
+
+    <!-- NORMAL AUDIO PLAYER -->
+    <audio id="myAudio" controls autoplay>
+      <source src="data/dance.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio><br>
+
+    <!-- PLAYING SONGS FROM DIRECT UPLOAD -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- <input type="file" id="songs" multiple>
+    <audio controls id="myAudio" autoplay></audio> -->
+
+    <script>
+      var songs = document.getElementById("songs"),
+      myAudio = document.getElementById("myAudio");
+      function next(n){
+        var url = URL.createObjectURL(files[n]);
+        myAudio.setAttribute('src', url);
+        myAudio.play();
+      }
+      var _next = 0,
+          files,
+          len;
+      songs.addEventListener('change', function() {
+        files = songs.files;
+        len = files.length;
+        if(len){
+          next(_next);
+        }
+      });
+      myAudio.addEventListener("ended", function(){
+         _next += 1;
+         next(_next);
+         console.log(len, _next);
+         if((len-1)==_next){
+           _next=-1;
+         }
+      });
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!-- ADD AUDIO HERE -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel = "stylesheet" type = "text/css" href = "style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Earlierst Memory</title>
+  </head>
+
+  <body>
+    <div id = "mainContainer">
+      <div id = "secContainer">
+        <h2><i>Anonymous first memories submitted from 2014 - 2019</i></h2>
+        <!-- Program randomly selects audio from preset list, plays -->
+        <!-- Missing: No controls + autoplay -->
+
+        <!-- AUDIO PLAYER -->
+        <audio id="myAudio" controls autoplay>
+          <source src="data" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio><br>
+
+        <p class = "mySubheader"><a href="home.html">Back</a></p>
+
+      </div>
+    </div>
+
+    <script>
+      //ARCHIVE AUDIO HERE! *****************************************
+      var playlist = ['1.mp3', '2.mp3','3.mp3','4.mp3','5.mp3','6.mp3','7.mp3','8.mp3','9.mp3','10.mp3','11.mp3','12.mp3','13.mp3','14.mp3','15.mp3','16.mp3','17.mp3','18.mp3','19.mp3','20.mp3','21.mp3', '32.mp3', '33.mp3', '34.mp3', '35.mp3','36.mp3','37.mp3','38.mp3','39.mp3','40.mp3','41.mp3','42.mp3','43.mp3','44.mp3'];
+      //*********************************************************
+
+
+      //randomly selecting audio from playlist
+      var rand = Math.floor(Math.random() * playlist.length);
+      console.log(rand);
+      console.log(playlist[rand]);
+
+      //connecting to audio player
+      var ply = document.getElementById('myAudio');
+      //referencing song
+      ply.src = 'data/' + playlist[rand];
+      console.log(ply);
+      console.log(ply.src);
+
+      //loading and playing song
+      ply.load();
+      ply.play();
+
+      //return to home once audio has finished
+      var audioVar = document.getElementById("myAudio");
+      audioVar.onended = function() {
+          console.log("audio has ended, going back to home");
+          location.replace("home.html")};
+
+    </script>
+
+  </body>
+</html>

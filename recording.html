@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel = "stylesheet" type = "text/css" href = "style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Earlierst Memory</title>
+    <script src="https://kit.fontawesome.com/9c73261ce5.js"></script>
+  </head>
+
+  <body>
+    <div id = "mainContainer">
+      <div id = "secContainer">
+        <h1 class = "myHeader" id = "recordingTitle"> Earliest Memory Recording </h1>
+        <p class = "mySubheader" id = "note"><i>Please allow microphone access to get started </i></span></p>
+
+        <!-- buttons to start/stop recording -->
+        <div id = "recordingAssets">
+          <button id = record <span style="font-size: 3em; background-color:none;"><i class="fas fa-microphone"></i></span></button>
+          <button id = stopRecord disabled <span style="font-size: 3em;"><i class="far fa-stop-circle"></i></span></button>
+        </div>
+
+        <p>
+    			<audio id=recordedAudio></audio>
+    		</p>
+
+        <div id = "hiddenMenu">
+          <h1 class = "submitHeader"> Do you want to submit your recording?</h1>
+          <ul id = "myList">
+            <li class = "submitLi"><p class = "mySubheader"><a href="recording.html">No, delete and re-record</a></p></li>
+            <li class = "submitLi"><p class = "mySubheader"><a href="home.html">No, delete and return to homepage</a></p></li>
+        </ul>
+        </div>
+
+
+      </div>
+    </div>
+
+    <script>
+      //Using MediaDevices API to access microphone (asks for access, then calls 'handlerFunction')
+      navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {handlerFunction(stream)})
+
+      //handlerFunction
+      function handlerFunction(stream) {
+      //create rec object (allows to save streamed media into an object)
+      rec = new MediaRecorder(stream);
+      rec.ondataavailable = e => {
+        audioChunks.push(e.data);
+        if (rec.state == "inactive"){
+          let blob = new Blob(audioChunks,{type:'audio/mpeg-3'});
+          //connecting to audio player + sending recording to play
+          recordedAudio.src = URL.createObjectURL(blob);
+          recordedAudio.controls=false;
+          recordedAudio.autoplay=false;
+          //DOWNLOADING AUDIO
+          var source = recordedAudio.src;
+          console.log(source);
+          var link = document.createElement("a");
+          link.id = "downloadLink";
+          link.href = source;
+          link.download = 'earliest_memory_' + new Date().getTime() + '.mp3';
+          link.innerHTML = "Yes! Submit and do the last step!";
+          document.body.appendChild(link);
+          downloadLink.style.alignItems = "center";
+          downloadLink.style.textAlign = "center";
+          downloadLink.style.listStyleType = "none";
+          document.getElementById('downloadLink').className = "submitLi";
+          var node = document.createElement("LI");
+          node.className = "submitLi";
+          node.appendChild(link);
+          var list = document.getElementById("myList");
+          list.insertBefore(node, list.childNodes[0]);
+          // document.getElementById("myList").appendChild(node);
+          sendData(blob);
+          // Send to another page at 'submit'
+          document.getElementById("downloadLink").addEventListener("click", redirectMe);
+        }
+      }
+    }
+      function sendData(data) {}
+
+      //stopping recording buttons
+      stopRecord.onclick = e => {
+        console.log("Stopping recording");
+        record.disabled = false;
+        stop.disabled=true;
+        // record.style.backgroundColor = "red"
+        rec.stop();
+        document.getElementById("recordingAssets").style.display = "none";
+        document.getElementById("hiddenMenu").style.display = "flex";
+        document.getElementById("note").style.display = "none";
+      }
+
+      //starting the recording
+      record.onclick = e => {
+        console.log('I was clicked!');
+        record.disabled = true;
+        document.getElementById("record").style.display = "none";
+        document.getElementById("stopRecord").style.display = "block";
+        stopRecord.disabled=false;
+        audioChunks = [];
+        rec.start();
+      }
+
+      //redirect to caption website
+      function redirectMe() {
+          window.location.replace("caption.html");
+      }
+
+      //show hidden content once audio has finished
+      var audioVar = document.getElementById("recordedAudio");
+      audioVar.onended = function() {
+          console.log("audio has ended, showing hidden menu");
+          document.getElementById("hiddenMenu").style.display = "flex";
+          document.getElementById("recordingAssets").style.display = "none";
+        };
+
+      // //start/stop recording
+      // var counter=1;
+      // console.log(counter);
+      // document.getElementById("record").onclick = function(){
+      //   counter++;
+      //   console.log(counter);
+      // }
+      //
+      // if (counter == 1){
+      //   console.log("starting");
+      //   rec.start();
+      //   console.log(counter);
+      // }
+      // if (counter == 2){
+      //   console.log("stopping");
+      //   // rec.stop();
+      // }
+      //
+      // if (counter == 0){
+      //   console.log("in if statement");
+      // }
+
+
+
+    </script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel = "stylesheet" type = "text/css" href = "style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Earlierst Memory</title>
+    <script src="https://kit.fontawesome.com/9c73261ce5.js"></script>
+  </head>
+
+  <body>
+    <div id = "mainContainer">
+      <div id = "secContainer">
+        <h1 class = "myHeader"> Last step! Record a "verbal caption."</h1>
+        <h2 id = "captionSubheader"> State: </h2>
+        <ol>
+          <li class = "description">How old you probably were</li>
+          <li class = "description">The year it probably was</li>
+          <li class = "description">The city/country the memory took place in</li>
+        </ol>
+        <p class = "mySubheader" id = "captionEmphasis"><i> Example: “So, I would have been around three, in 1979 or so, in
+        Cairo, Egypt.” </i></p>
+
+        <!-- buttons to start/stop recording -->
+        <div id = "recordingAssets">
+          <button id = record <span style="font-size: 3em;"><i class="fas fa-microphone"></i></span></button>
+          <button id = stopRecord disabled <span style="font-size: 3em;"><i class="far fa-stop-circle"></i></span></button>
+        </div>
+
+        <!-- audio player -->
+        <p>
+    			<audio id=recordedAudio></audio>
+    		</p>
+
+        <div id = "hiddenMenu">
+          <h1 class = "submitHeader"> Do you want to submit your recording?</h1>
+          <ul id = "myList">
+            <!-- <li class = "submitLi"><p class = "mySubheader" id = "specialSubmit"><a href="#">Yes, submit!</a></p></li> -->
+            <li class = "submitLi"><p class = "mySubheader"><a href="caption.html">No, delete and re-record</a></p></li>
+          </ul>
+        </div>
+
+      </div>
+  </div>
+
+
+
+    <script>
+      //Using MediaDevices API to access microphone (asks for access, then calls 'handlerFunction')
+      navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {handlerFunction(stream)})
+
+      //handlerFunction
+      function handlerFunction(stream) {
+      //create rec object (allows to save streamed media into an object)
+      rec = new MediaRecorder(stream);
+      rec.ondataavailable = e => {
+        audioChunks.push(e.data);
+        if (rec.state == "inactive"){
+          let blob = new Blob(audioChunks,{type:'audio/mpeg-3'});
+          //connecting to audio player + sending recording to play
+          recordedAudio.src = URL.createObjectURL(blob);
+          recordedAudio.controls=false;
+          recordedAudio.autoplay=false;
+          //DOWNLOADING AUDIO
+          var source = recordedAudio.src;
+          console.log(source);
+          var link = document.createElement("a");
+          link.id = "downloadLink";
+          link.href = source;
+          link.download = 'earliest_memory_caption' + new Date().getTime() + '.mp3';
+          link.innerHTML = "Yes, submit!";
+          document.body.appendChild(link);
+          downloadLink.style.alignItems = "center";
+          downloadLink.style.textAlign = "center";
+          downloadLink.style.listStyleType = "none";
+          document.getElementById('downloadLink').className = "submitLi";
+          var node = document.createElement("LI");
+          node.className = "submitLi";
+          node.appendChild(link);
+          var list = document.getElementById("myList");
+          list.insertBefore(node, list.childNodes[0]);
+          // document.getElementById("myList").appendChild(node);
+          sendData(blob);
+          // Send to another page at 'submit'
+          document.getElementById("downloadLink").addEventListener("click", redirectMe);
+        }
+      }
+    }
+      function sendData(data) {}
+
+      //start recording
+      record.onclick = e => {
+        console.log('I was clicked')
+        record.disabled = true;
+        stopRecord.disabled=false;
+        document.getElementById("record").style.display = "none";
+        document.getElementById("stopRecord").style.display = "block";
+        audioChunks = [];
+        rec.start();
+      }
+      //stop recording
+      stopRecord.onclick = e => {
+        console.log("I was clicked")
+        record.disabled = false;
+        stop.disabled=true;
+        rec.stop();
+        document.getElementById("recordingAssets").style.display = "none";
+        document.getElementById("hiddenMenu").style.display = "flex";
+      }
+
+
+
+      function redirectMe() {
+          window.location.replace("end.html");
+      }
+
+    </script>
+
+  </body>
+</html>

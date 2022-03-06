@@ -1,0 +1,111 @@
+h1{
+  font-family: 'Open Sans', sans-serif;
+  margin:1%;
+}
+
+h2{
+  font-family: 'Open Sans', sans-serif;
+}
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+
+p{
+  font-family: 'Open Sans', sans-serif;
+}
+#record{
+  color:red;
+  display:block;
+}
+
+#stopRecord{
+  color:red;
+  display:none;
+}
+
+#mainContainer{
+  width:100%;
+  height:700px; /*make responsive later */
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  flex-direction:column;
+}
+
+#secContainer{
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  flex-direction:column;
+  width:100%;
+}
+
+.mySubheader{
+  /* margin:1%; */
+  text-align:center;
+  /* width:20%; */
+}
+
+#hiddenMenu{
+  display:none;
+  align-items:center;
+  justify-content: center;
+  flex-direction:column;
+  width:80%;
+}
+
+#recordingAssets{
+  display:flex;
+  /* margin:3%; */
+}
+
+#note{
+  margin-bottom:5%;
+}
+
+#recordingTitle{
+  margin:0;
+}
+
+#recordedAudio{
+  display:none;
+}
+
+button {
+  /* all: unset; */
+  border:none;
+  background:none;
+  /* background-color:white !important; */
+  cursor: pointer;
+  margin:2%;
+}
+
+.submitHeader{
+  font-size:1.5em;
+}
+
+a:hover{
+  opacity:0.65;
+}
+
+.submitLi{
+  list-style-type: none;
+  width:400px;
+  text-align:center;
+}
+
+.description{
+  /* font-size:1em; */
+}
+
+#captionSubheader{
+  /* font-size:1.3em; */
+  margin:1%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#captionEmphasis{
+  font-size:14px;
+  width:66%;
+  /* margin-bottom:2%; */
+}
